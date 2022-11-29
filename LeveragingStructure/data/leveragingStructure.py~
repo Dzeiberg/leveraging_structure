@@ -834,16 +834,18 @@ from sklearn.preprocessing import OneHotEncoder
 from datasets import load_dataset
 from sklearn.decomposition import PCA
 import pickle
+import os
 
 class HuggingfaceDataset(object):
     @classmethod
     def getData(*args,**kwargs):
         dsname = kwargs.get("dataset_name","amazon_reviews_multi")
         dataset = load_dataset(dsname, "all_languages",
-                      cache_dir=kwargs.get("cache_dir","/data/dzeiberg/huggingface/"))
+                      cache_dir=kwargs.get("cache_dir","/scratch/zeiberg.d/leveragingStructureFinalExperiments/huggingface/"))
         tr = dataset["train"].to_pandas()
+        huggingfaceSaveDir=kwargs.get("huggingfaceSaveDir","/data/dzeiberg/leveragingStructureResponseExperiments/")
         try:
-            trainEncodings = torch.load(f"/data/dzeiberg/leveragingStructureResponseExperiments/{dsname}/trainEncodings.pt")
+            trainEncodings = torch.load(os.path.join(huggingfaceSaveDir,f"{dsname}/trainEncodings.pt"))
         except FileNotFoundError:
             print("Could not load embeddings, re-processing...")
             model = SentenceTransformer('all-MiniLM-L6-v2')
@@ -859,12 +861,12 @@ class HuggingfaceDataset(object):
             group[i] = groupMap[g]
         if kwargs.get("pca",False):
             try:
-                with open(f"/data/dzeiberg/leveragingStructureResponseExperiments/{dsname}/pca.skl.pkl","rb") as f:
+                with open(os.path.join(huggingfaceSaveDir,f"{dsname}/pca.skl.pkl"),"rb") as f:
                     pca = pickle.load(f)    
             except FileNotFoundError:
                 pca = PCA(n_components=25)
                 pca.fit(X)
-                with open(f"/data/dzeiberg/leveragingStructureResponseExperiments/{dsname}/pca.skl.pkl","wb") as f:
+                with open(os.path.join(huggingfaceSaveDir,f"{dsname}/pca.skl.pkl"),"wb") as f:
                     pickle.dump(pca,f)
             X = pca.transform(X)
         return X,y,group

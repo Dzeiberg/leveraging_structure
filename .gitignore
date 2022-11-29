@@ -1,3 +1,4 @@
+*.pyc
 scripts/slurmScripts/output
 *.out
 *.err
