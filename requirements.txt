@@ -1,0 +1,16 @@
+numpy
+matplotlib
+pdbpp
+scipy
+sklearn
+tqdm
+folktables
+pandas
+glob2
+xgboost
+tensorflow
+fire
+torch
+sentence_transformers
+datasets
+easydict
