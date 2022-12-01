@@ -1,3 +1,16 @@
+# Leveraging Structure for Improved Classification of Grouped Biased Data
+
+This repository contains the code used to generate the results for "Leveraging Structure for Improved Classification of Grouped Biased Data" presented at AAAI 2023. Please see the [expanded version](files/leveraging_structure.pdf) of the paper for the Appendix containing proofs and additional experiments.
+
+## Create environment and Install Dependencies
+
+`conda create --name structure python=3.9`
+
+`conda activate structure`
+
+`python -m pip install -r requirements.txt`
+
+
 ```python
 #hide
 from LeveragingStructure.core import *
@@ -8,17 +21,6 @@ from LeveragingStructure.core import *
 import warnings
 warnings.filterwarnings('ignore')
 ```
-
-# Leveraging Structure for Improved Classification of Grouped Data
-
-
-## Create environment and Install Dependencies
-
-`conda create --name structure python=3.9`
-
-`conda activate structure`
-
-`python -m pip install -r requirements.txt`
 
 # Running Experiment on Synthetic Data
 
