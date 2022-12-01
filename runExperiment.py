@@ -47,6 +47,7 @@ def main(experimentPath,problem_setting=2,labelProportion=.5,minsize=500,
          datasetType="acs",
          cache_dir="/data/dzeiberg/huggingface/",
          huggingfaceSaveDir="/data/dzeiberg/leveragingStructureResponseExperiments/",
+         bufferAmazon=True,
          syntheticNTargets=100,
          syntheticDim=2,
          syntheticNClusters=2,
@@ -93,9 +94,9 @@ def main(experimentPath,problem_setting=2,labelProportion=.5,minsize=500,
                 d = ACSLoaderSetting1(**baseDSKwargs,**acsKwargs)
         elif datasetType == "huggingface":
             if problem_setting == 1:
-                d = HuggingfaceDatasetSetting1(pca=pca,cache_dir=cache_dir,huggingfaceSaveDir=huggingfaceSaveDir,**baseDSKwargs)
+                d = HuggingfaceDatasetSetting1(pca=pca,cache_dir=cache_dir,huggingfaceSaveDir=huggingfaceSaveDir,bufferAmazon=bufferAmazon,**baseDSKwargs)
             else:
-                d = HuggingfaceDatasetSetting2(pca=pca,cache_dir=cache_dir,huggingfaceSaveDir=huggingfaceSaveDir,**baseDSKwargs)
+                d = HuggingfaceDatasetSetting2(pca=pca,cache_dir=cache_dir,huggingfaceSaveDir=huggingfaceSaveDir,bufferAmazon=bufferAmazon,**baseDSKwargs)
         elif datasetType == "synthetic":
             if problem_setting == 2:
                 d = SyntheticSetting2.from_criteria(syntheticNTargets,syntheticNClusters,syntheticDim,**syntheticKwargs)

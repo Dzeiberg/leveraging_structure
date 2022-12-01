@@ -10,4 +10,4 @@
 eval "$(conda shell.bash hook)"
 conda activate st2
 cd /home/zeiberg.d/LEVERAGING_STRUCTURE_CODE_APPENDIX/
-srun python runExperiment.py --experimentPath /scratch/zeiberg.d/leveragingStructureFinalExperiments/experiments/amazon_reviews_setting_1_$SLURM_ARRAY_TASK_ID --datasetType huggingface --problem_name amazon_reviews_multi --problem_setting 1 --pca False --cache_dir /scratch/zeiberg.d/leveragingStructureFinalExperiments/huggingface/ --huggingfaceSaveDir /scratch/zeiberg.d/leveragingStructureFinalExperiments/
+srun python runExperiment.py --experimentPath /scratch/zeiberg.d/leveragingStructureFinalExperiments/experiments/amazon_reviews_buffer_setting_1_$SLURM_ARRAY_TASK_ID --datasetType huggingface --problem_name amazon_reviews_multi --bufferAmazon True --problem_setting 1 --pca False --cache_dir /scratch/zeiberg.d/leveragingStructureFinalExperiments/huggingface/ --huggingfaceSaveDir /scratch/zeiberg.d/leveragingStructureFinalExperiments/

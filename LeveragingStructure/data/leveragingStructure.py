@@ -843,6 +843,10 @@ class HuggingfaceDataset(object):
         dataset = load_dataset(dsname, "all_languages",
                       cache_dir=kwargs.get("cache_dir","/data/dzeiberg/huggingface/"))
         tr = dataset["train"].to_pandas()
+        bufferAmazon = kwargs.get("bufferAmazon",True)
+        if bufferAmazon:
+            mask = tr.stars != 3
+            tr = tr[mask]
         huggingfaceSaveDir=kwargs.get("huggingfaceSaveDir","/data/dzeiberg/leveragingStructureResponseExperiments/")
         try:
             trainEncodings = torch.load(os.path.join(huggingfaceSaveDir,f"{dsname}/trainEncodings.pt"))
@@ -853,6 +857,8 @@ class HuggingfaceDataset(object):
              show_progress_bar=True,device=kwargs.get("device","cuda:3"),
                               batch_size=kwargs.get("batch_size",64),)
             torch.save(f"/data/dzeiberg/leveragingStructureResponseExperiments/{dsname}/trainEncodings.pt")
+        if bufferAmazon:
+            trainEncodings = trainEncodings[mask]
         X,y = trainEncodings,(tr.stars > kwargs.get("starThreshold",3)).values
         uniqueGroups = list(tr.product_category.unique())
         groupMap = dict(zip(uniqueGroups, np.arange(len(uniqueGroups))))
